@@ -23,6 +23,7 @@
 # THE SOFTWARE.
 import logging
 import time
+import datetime
 
 
 # BME280 default address.
@@ -212,3 +213,10 @@ class BME280(object):
             h = 0
         return h
 
+    def read_all(self):
+        res = {}
+        res['Temperature'] = self.read_temperature()
+        res['Pressure'] = self.read_pressure() / 100
+        res['Humidity'] = self.read_humidity()
+        res['timestamp'] = datetime.datetime.utcnow().isoformat()
+        return res
